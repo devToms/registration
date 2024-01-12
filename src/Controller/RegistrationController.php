@@ -28,7 +28,6 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
-        
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$this->registrationService->registerUser($user)) {
                 $this->addFlash('warning', 'User with given e-mail address already exists.');
