@@ -12,7 +12,7 @@ use App\Form\UserType;
 
 class RegistrationController extends AbstractController
 {
-    private $registrationService;
+    private RegistrationService $registrationService;
 
     public function __construct(RegistrationService $registrationService)
     {
