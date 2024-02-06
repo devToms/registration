@@ -31,7 +31,6 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$this->registrationService->registerUser($user)) {
                 $this->addFlash('warning', 'User with given e-mail address already exists.');
-                return $this->redirectToRoute('user_registration');
             }
 
             return $this->redirectToRoute('user_registration');
