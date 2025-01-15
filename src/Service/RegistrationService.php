@@ -28,7 +28,7 @@ class RegistrationService
 
         $user->setPassword($hashedPassword)->setRoles($user->getRoles());
 
-        $this->userRepository->save($user);
+        $this->userRepository->save($user, true);
 
         return true;
     }
