@@ -26,16 +26,21 @@ class RegistrationController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-
+    
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!$this->registrationService->registerUser($user)) {
-                $this->addFlash('warning', 'User with given e-mail address already exists.');
+            try {
+                if (!$this->registrationService->registerUser($user)) {
+                    $this->addFlash('warning', 'User with given e-mail address already exists.');
+                } else {
+                    $this->addFlash('success', 'Registration successful!');
+                    return $this->redirectToRoute('login_route');
+                }
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'An error occurred during registration.');
             }
-
-            return $this->redirectToRoute('user_registration');
         }
-
+    
         return $this->render('registration/register.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'RegistrationController',
