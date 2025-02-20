@@ -4,9 +4,10 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\RegistrationServiceInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class RegistrationService
+class RegistrationService implements RegistrationServiceInterface
 {
     private UserRepository $userRepository;
     private UserPasswordHasherInterface $passwordHasher;
