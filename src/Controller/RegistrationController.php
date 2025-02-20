@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Service\RegistrationService;
+use App\Service\RegistrationServiceInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,21 +12,16 @@ use App\Form\UserType;
 
 class RegistrationController extends AbstractController
 {
-    private RegistrationService $registrationService;
+    public function __construct(
+        private RegistrationServiceInterface $registrationService
+    ) {}
 
-    public function __construct(RegistrationService $registrationService)
-    {
-        $this->registrationService = $registrationService;
-    }
-
-    /**
-     * @Route("/registration", name="user_registration")
-     */
+    #[Route('/registration', name: 'user_registration')]
     public function register(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-    
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
@@ -40,7 +35,7 @@ class RegistrationController extends AbstractController
                 $this->addFlash('error', 'An error occurred during registration.');
             }
         }
-    
+
         return $this->render('registration/register.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'RegistrationController',
