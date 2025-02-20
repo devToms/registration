@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-Interface UserRepositoryInterface
+interface UserRepositoryInterface
 {
     public function save(User $entity, bool $flush = false): void;
 
